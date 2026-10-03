@@ -245,6 +245,6 @@ PBO_GameTebak_Kelompok1/
 ├── mainmenu.java
 │
 ├── README.md                            <-- (Dokumentasi Utama Project)
-├── Struktur_Materi3.md                  <-- (Baru: Peta Arsitektur & Tugas Anggota)
+├── Struktur_Materi.md                  <-- (Baru: Peta Arsitektur & Tugas Anggota)
 ├── Struktur_Overriding_Polymorphism.md  <-- (Baru: Bedah Overriding & Polymorphism)
 └── Struktur_Upcasting_DynamicBinding.md <-- (Baru: Bedah Upcasting & Dynamic Binding)
