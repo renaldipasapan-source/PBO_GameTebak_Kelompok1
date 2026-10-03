@@ -1,3 +1,12 @@
+Paham banget, Renaldi! Kamu mau **semua penjelasan struktur dan diagram itu langsung digabung masuk di dalam file `README.md` itu sendiri**, jadi pas orang scroll ke bawah di halaman GitHub, semuanya langsung kelihatan dalam satu halaman utuh tanpa perlu klik-klik file lain.
+
+Berikut adalah kodingan isi **`README.md`** yang sudah digabung total! Kamu tinggal salin (*copy-paste*) seluruh isinya ke file `README.md` di VS Code, lalu push ke GitHub.
+
+---
+
+### Isi File `README.md` Lengkap (Gabungan Semua Materi & Struktur)
+
+```markdown
 # 🎮 PBO Game Tebak (Materi 3: Polymorphism, Overriding, Dynamic Binding, & Upcasting)
 
 ![Java](https://img.shields.io/badge/Language-Java-orange?style=for-the-badge&logo=java)
@@ -18,7 +27,7 @@ Proyek ini dirancang secara khusus untuk mendemonstrasikan penerapan **4 Pilar U
 
 | Kontributor | Sub-Materi 3 | Peran Modul & Kodingan | Branch Feature |
 |---|---|---|---|
-| **Renaldi Pasapan** | ⬆️ **Upcasting** | Mengatur variabel referensi `GameTebak` penampung objek subclass | `feature/upcasting` |
+| **Renaldi Pasapan** *(Ketua)* | ⬆️ **Upcasting** | Mengatur variabel referensi `GameTebak` penampung objek subclass | `feature/upcasting` |
 | **Jonathan Immanuel I.** | 🔄 **Overriding** | Overriding method `hitungSkor()` & `validasiTebakan()` di `TebakAngka.java` | `feature/overriding-angka` |
 | **Rafli Gio Manulang** | 🔄 **Overriding** | Overriding method `hitungSkor()` & `validasiTebakan()` di `TebakAbjad.java` | `feature/overriding-abjad` |
 | **Markwell Gilang A.** | 🎭 **Polymorphism** | Menerapkan fleksibilitas panggilan method polimorfik | `feature/polymorphism` |
@@ -50,11 +59,18 @@ Arsitektur Materi 3 (Game Tebak)
 │
 └── 4. Dynamic Binding (Pengecekan Method saat Runtime)
     └── JVM mengeksekusi logika validasi & skor sesuai objek aktif saat runtime
-2. Diagram & Detail Penjelasan Konsep Materi 3
-A. Overriding Method (Jonathan & Rafli)
-Method Overriding terjadi ketika subclass menimpa/menulis ulang implementasi method yang diwarisi dari superclass dengan nama, parameter, dan tipe kembalian yang sama persis.
 
-Plaintext
+```
+
+---
+
+## 2. Diagram & Detail Penjelasan Konsep Materi 3
+
+### A. Overriding Method (Jonathan & Rafli)
+
+Method Overriding terjadi ketika *subclass* menimpa/menulis ulang implementasi method yang diwarisi dari *superclass* dengan nama, parameter, dan tipe kembalian yang sama persis.
+
+```text
 GameTebak.java (Superclass)
 │
 └── public int hitungSkor() { return 0; }  <-- [Method Base Dasar]
@@ -66,10 +82,16 @@ GameTebak.java (Superclass)
       └── TebakAbjad.java (Rafli)
           └── @Override
               public int hitungSkor() { ... }  <-- [Aturan Skor Spesifik Abjad]
-B. Upcasting (Renaldi Pasapan)
-Upcasting adalah proses mengubah tipe referensi objek dari kelas anak (subclass) menjadi tipe kelas induknya (superclass). Di Java, proses ini berjalan otomatis (implicit) dan 100% aman (type-safe).
 
-Plaintext
+```
+
+---
+
+### B. Upcasting (Renaldi Pasapan)
+
+Upcasting adalah proses mengubah tipe referensi objek dari kelas anak (*subclass*) menjadi tipe kelas induknya (*superclass*). Di Java, proses ini berjalan otomatis (*implicit*) dan 100% aman (*type-safe*).
+
+```text
       ┌──────────────────────────────────────────┐
       │          GameTebak (Superclass)          │
       └────────────────────▲─────────────────────┘
@@ -82,74 +104,127 @@ Plaintext
 │   TebakAngka   │                   │   TebakAbjad   │
 │   (Subclass)   │                   │   (Subclass)   │
 └────────────────┘                   └────────────────┘
-Contoh Kode Upcasting:
 
-Java
+```
+
+**Contoh Kode Upcasting:**
+
+```java
 // Objek TebakAngka (Subclass) di-upcast ke referensi GameTebak (Superclass)
 GameTebak gameTebakAngka = new TebakAngka(1, 10, 3);
 
 // Objek TebakAbjad (Subclass) di-upcast ke referensi GameTebak (Superclass)
 GameTebak gameTebakAbjad = new TebakAbjad('a', 'z', 5);
-C. Polymorphism & Dynamic Binding (Markwell & Reza)
-Polymorphism: Pemanggilan nama method yang sama (hitungSkor()) menghasilkan eksekusi yang disesuaikan dengan jenis objeknya.
 
-Dynamic Binding: Keputusan method mana yang dieksekusi ditentukan secara otomatis oleh Java Virtual Machine (JVM) saat RUNTIME saat aplikasi sedang dimainkan.
+```
 
-Plaintext
+---
+
+### C. Polymorphism & Dynamic Binding (Markwell & Reza)
+
+* **Polymorphism:** Pemanggilan nama method yang sama (`hitungSkor()`) menghasilkan eksekusi yang disesuaikan dengan jenis objeknya.
+* **Dynamic Binding:** Keputusan method mana yang dieksekusi ditentukan secara otomatis oleh Java Virtual Machine (JVM) saat **RUNTIME** saat aplikasi sedang dimainkan.
+
+```text
 User Memilih Game di Menu Utama (Runtime)
                  │
                  ├──► [1. Tebak Angka]  ──► JVM Memanggil Method TebakAngka
                  │
                  └──► [2. Tebak Abjad]  ──► JVM Memanggil Method TebakAbjad
-🚀 PANDUAN SETUP & WORKFLOW GIT UNTUK ANGGOTA
-1. Cek Instalasi Git
-Bash
+
+```
+
+---
+
+# 🚀 PANDUAN SETUP & WORKFLOW GIT UNTUK ANGGOTA
+
+## 1. Cek Instalasi Git
+
+```bash
 git --version
-2. Clone Repository
-Bash
+
+```
+
+## 2. Clone Repository
+
+```bash
 cd Documents
 git clone [https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git](https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git)
 cd PBO_GameTebak_Kelompok1
-3. Buat & Pindah ke Branch Fitur Masing-Masing
-👑 Renaldi Pasapan — Upcasting
-Bash
+
+```
+
+## 3. Buat & Pindah ke Branch Fitur Masing-Masing
+
+### 👑 Renaldi Pasapan — Upcasting
+
+```bash
 git checkout master
 git pull origin master
 git checkout -b feature/upcasting
 git push -u origin feature/upcasting
-👤 Jonathan Immanuel Iskandar — Overriding Tebak Angka
-Bash
+
+```
+
+### 👤 Jonathan Immanuel Iskandar — Overriding Tebak Angka
+
+```bash
 git checkout master
 git pull origin master
 git checkout -b feature/overriding-angka
 git push -u origin feature/overriding-angka
-👤 Rafli Gio Manulang — Overriding Tebak Abjad
-Bash
+
+```
+
+### 👤 Rafli Gio Manulang — Overriding Tebak Abjad
+
+```bash
 git checkout master
 git pull origin master
 git checkout -b feature/overriding-abjad
 git push -u origin feature/overriding-abjad
-👤 Markwell Gilang Airlanga — Polymorphism
-Bash
+
+```
+
+### 👤 Markwell Gilang Airlanga — Polymorphism
+
+```bash
 git checkout master
 git pull origin master
 git checkout -b feature/polymorphism
 git push -u origin feature/polymorphism
-👤 Reza Wijaya — Dynamic Binding
-Bash
+
+```
+
+### 👤 Reza Wijaya — Dynamic Binding
+
+```bash
 git checkout master
 git pull origin master
 git checkout -b feature/dynamic-binding
 git push -u origin feature/dynamic-binding
-4. Panduan Commit & Push
-Bash
+
+```
+
+---
+
+## 4. Panduan Commit & Push
+
+```bash
 git status
 git add .
 git commit -m "feat: implementasi konsep materi 3 PBO"
 git push
-💡 VS Code Markdown Preview
-Untuk melihat tampilan preview README.md ini secara langsung di VS Code, tekan tombol Ctrl + Shift + V.
 
+```
+
+---
+
+## 💡 VS Code Markdown Preview
+
+Untuk melihat tampilan preview `README.md` ini secara langsung di VS Code, tekan tombol **`Ctrl + Shift + V`**.
+
+```
 
 ---
 
@@ -160,6 +235,11 @@ Setelah mengganti isi file `README.md` dengan kodingan di atas, jalankan ini di 
 git add README.md
 git commit -m "docs: update gabungan struktur materi 3 lengkap di README"
 git push origin master
+
+```
+
+Begitu selesai di-push, seluruh penjelasan struktur dan diagram pohonnya akan langsung tampil rapi pas orang scroll halaman depan GitHub kamu!
+
 
 
 ### 📂 Struktur File :
