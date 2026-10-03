@@ -29,27 +29,88 @@ Proyek ini dirancang secara khusus untuk mendemonstrasikan penerapan **4 Pilar U
 
 ---
 
-# 🛠️ Panduan Setup & Workflow Git untuk Anggota
+# 📘 BEDAH ARSITEKTUR KONSEP MATERI 3
 
-## 1. Cek Instalasi Git
+## 1. Structure Tree Integration
 
-Buka Terminal / Command Prompt:
+```text
+Arsitektur Materi 3 (Game Tebak)
+│
+├── 1. Overriding (Metode Menimpa Perilaku Induk)
+│   ├── GameTebak.java       ──► hitungSkor() [Method Base]
+│   ├── TebakAngka.java      ──► hitungSkor() [@Override khusus Angka]
+│   └── TebakAbjad.java      ──► hitungSkor() [@Override khusus Abjad]
+│
+├── 2. Upcasting (Pengangkatan Status Objek ke Superclass)
+│   ├── Subclass Object      ──► new TebakAngka(...) / new TebakAbjad(...)
+│   └── Reference Variable  ──► GameTebak game = ...
+│
+├── 3. Polymorphism (Satu Antarmuka, Banyak Bentuk)
+│   └── Pemanggilan method seragam berbasis tipe superclass GameTebak
+│
+└── 4. Dynamic Binding (Pengecekan Method saat Runtime)
+    └── JVM mengeksekusi logika validasi & skor sesuai objek aktif saat runtime
+2. Diagram & Detail Penjelasan Konsep Materi 3
+A. Overriding Method (Jonathan & Rafli)
+Method Overriding terjadi ketika subclass menimpa/menulis ulang implementasi method yang diwarisi dari superclass dengan nama, parameter, dan tipe kembalian yang sama persis.
 
-```bash
+Plaintext
+GameTebak.java (Superclass)
+│
+└── public int hitungSkor() { return 0; }  <-- [Method Base Dasar]
+      │
+      ├── TebakAngka.java (Jonathan)
+      │   └── @Override
+      │       public int hitungSkor() { ... }  <-- [Aturan Skor Spesifik Angka]
+      │
+      └── TebakAbjad.java (Rafli)
+          └── @Override
+              public int hitungSkor() { ... }  <-- [Aturan Skor Spesifik Abjad]
+B. Upcasting (Renaldi Pasapan)
+Upcasting adalah proses mengubah tipe referensi objek dari kelas anak (subclass) menjadi tipe kelas induknya (superclass). Di Java, proses ini berjalan otomatis (implicit) dan 100% aman (type-safe).
+
+Plaintext
+      ┌──────────────────────────────────────────┐
+      │          GameTebak (Superclass)          │
+      └────────────────────▲─────────────────────┘
+                           │
+             [Upcasting Otomatis / Implicit]
+                           │
+        ┌──────────────────┴──────────────────┐
+        │                                     │
+┌───────┴────────┐                   ┌────────┴───────┐
+│   TebakAngka   │                   │   TebakAbjad   │
+│   (Subclass)   │                   │   (Subclass)   │
+└────────────────┘                   └────────────────┘
+Contoh Kode Upcasting:
+
+Java
+// Objek TebakAngka (Subclass) di-upcast ke referensi GameTebak (Superclass)
+GameTebak gameTebakAngka = new TebakAngka(1, 10, 3);
+
+// Objek TebakAbjad (Subclass) di-upcast ke referensi GameTebak (Superclass)
+GameTebak gameTebakAbjad = new TebakAbjad('a', 'z', 5);
+C. Polymorphism & Dynamic Binding (Markwell & Reza)
+Polymorphism: Pemanggilan nama method yang sama (hitungSkor()) menghasilkan eksekusi yang disesuaikan dengan jenis objeknya.
+
+Dynamic Binding: Keputusan method mana yang dieksekusi ditentukan secara otomatis oleh Java Virtual Machine (JVM) saat RUNTIME saat aplikasi sedang dimainkan.
+
+Plaintext
+User Memilih Game di Menu Utama (Runtime)
+                 │
+                 ├──► [1. Tebak Angka]  ──► JVM Memanggil Method TebakAngka
+                 │
+                 └──► [2. Tebak Abjad]  ──► JVM Memanggil Method TebakAbjad
+🚀 PANDUAN SETUP & WORKFLOW GIT UNTUK ANGGOTA
+1. Cek Instalasi Git
+Bash
 git --version
 2. Clone Repository
-Buka VS Code → Terminal → New Terminal:
-
 Bash
 cd Documents
 git clone [https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git](https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git)
 cd PBO_GameTebak_Kelompok1
-3. Buka Project di VS Code
-Bash
-code .
-4. Buat & Pindah ke Branch Fitur Masing-Masing
-Setiap anggota WAJIB berpindah branch sebelum mulai menulis kodingan:
-
+3. Buat & Pindah ke Branch Fitur Masing-Masing
 👑 Renaldi Pasapan — Upcasting
 Bash
 git checkout master
@@ -80,46 +141,25 @@ git checkout master
 git pull origin master
 git checkout -b feature/dynamic-binding
 git push -u origin feature/dynamic-binding
-5. Pastikan Posisi Branch Aktif
-Cek branch aktif menggunakan perintah:
-
+4. Panduan Commit & Push
 Bash
-git branch
-🏗️ Arsitektur Kode & Pembagian Fokus Sub-Materi 3
-Struktur file project:
-
-Plaintext
-PBO_GameTebak_Kelompok1/
-│
-├── GameTebak.java     <-- Superclass (Generalisasi & Base Method)
-├── TebakAngka.java    <-- Subclass (Overriding Logika Angka)
-├── TebakAbjad.java    <-- Subclass (Overriding Logika Abjad)
-├── leaderboard.java   <-- Data Storage (Enkapsulasi Array Skor)
-├── mainmenu.java      <-- Executable (Dynamic Binding & Menu)
-└── README.md          <-- Documentation
-📝 Panduan Commit & Push Ke GitHub
-Setelah selesai koding, lakukan pengecekan dan push dengan perintah berikut:
-
-Bash
-# 1. Cek status file yang diubah
 git status
-
-# 2. Tambahkan semua perubahan
 git add .
-
-# 3. Commit dengan pesan fitur
 git commit -m "feat: implementasi konsep materi 3 PBO"
-
-# 4. Push ke branch fitur di GitHub
 git push
-🔀 Ringkasan Command per Anggota
-Bash
-git clone [https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git](https://github.com/RenaldiPasapan/PBO_GameTebak_Kelompok1.git)
-cd PBO_GameTebak_Kelompok1
-git checkout master
-git pull origin master
-git checkout -b feature/nama-branch-mu
-git push -u origin feature/nama-branch-mu
+💡 VS Code Markdown Preview
+Untuk melihat tampilan preview README.md ini secara langsung di VS Code, tekan tombol Ctrl + Shift + V.
+
+
+---
+
+### Cara Update ke GitHub:
+Setelah mengganti isi file `README.md` dengan kodingan di atas, jalankan ini di Terminal VS Code:
+
+```bash
+git add README.md
+git commit -m "docs: update gabungan struktur materi 3 lengkap di README"
+git push origin master
 
 
 ### 📂 Struktur File :
