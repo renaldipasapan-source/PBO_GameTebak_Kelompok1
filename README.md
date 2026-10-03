@@ -1,12 +1,3 @@
-Paham banget, Renaldi! Kamu mau **semua penjelasan struktur dan diagram itu langsung digabung masuk di dalam file `README.md` itu sendiri**, jadi pas orang scroll ke bawah di halaman GitHub, semuanya langsung kelihatan dalam satu halaman utuh tanpa perlu klik-klik file lain.
-
-Berikut adalah kodingan isi **`README.md`** yang sudah digabung total! Kamu tinggal salin (*copy-paste*) seluruh isinya ke file `README.md` di VS Code, lalu push ke GitHub.
-
----
-
-### Isi File `README.md` Lengkap (Gabungan Semua Materi & Struktur)
-
-```markdown
 # 🎮 PBO Game Tebak (Materi 3: Polymorphism, Overriding, Dynamic Binding, & Upcasting)
 
 ![Java](https://img.shields.io/badge/Language-Java-orange?style=for-the-badge&logo=java)
