@@ -1,173 +1,126 @@
 import java.util.Random;
 import java.util.Scanner;
 
-/* 
- * LABEL [MATERI 2 - SUBCLASS & GENERALISATION]:
- * TebakAbjad mewarisi sifat dan atribut dari Superclass GameTebak.
- *
- * LABEL [MATERI 3 - POLYMORPHISM & UPCASTING]:
- * Memungkinkan objek TebakAbjad diperlakukan sebagai bentuk umum GameTebak.
- */
 public class TebakAbjad extends GameTebak {
-    /* LABEL [MATERI 1 - DATA HIDING]: Atribut private khusus abjad rahasia */
     private char abjadRahasia;
 
     public TebakAbjad(char batasBawah, char batasAtas, int batasPercobaan) {
-        super(batasPercobaan); // MATERI 2: Reuse constructor induk
+        super(batasPercobaan);
         validasiRangeAbjad(batasBawah, batasAtas);
-        setBatasTebakan(batasBawah, batasAtas);
+        this.batasBawah = batasBawah;
+        this.batasAtas = batasAtas;
         generateAbjadRahasia();
     }
 
-    /* 
-     * LABEL [MATERI 3 - OVERRIDING METHOD]: 
-     * Menimpa method hitungSkor() dari GameTebak. Jika di masa depan ingin 
-     * mengubah rumus skor abjad, cukup di-override di sini tanpa merusak TebakAngka.
-     */
     @Override
-    public int hitungSkor() {
-        if (!menang) {
-            return 0;
-        }
-
-        final int maxSkor = 2500;
-        int deduct = switch (batasPercobaan) {
-            case 3 -> 100;
-            case 5 -> 200;
-            case 7 -> 300;
-            default -> throw new IllegalArgumentException("Batas percobaan harus 3, 5, atau 7.");
-        };
-
-        return Math.max(0, maxSkor - (deduct * (jumlahPercobaan - 1)));
-    }
-
-    private void generateAbjadRahasia() {
-        Random random = new Random();
-        abjadRahasia = (char) (random.nextInt(batasAtas - batasBawah + 1) + batasBawah);
-    }
-
-    /* LABEL [MATERI 1 - VALIDASI TEBAKAN]: Memastikan tebakan berupa huruf valid ('a'-'z') */
-    private boolean validasiTebakan(char tebakan) {
-        tebakan = Character.toLowerCase(tebakan);
-        return tebakan >= batasBawah && tebakan <= batasAtas;
+    protected void setBatasTebakan(int batasBawah, int batasAtas) {
+        this.batasBawah = batasBawah;
+        this.batasAtas = batasAtas;
     }
 
     private void validasiRangeAbjad(char batasBawah, char batasAtas) {
         if (batasBawah < 'a' || batasBawah > 'z' || batasAtas < 'a' || batasAtas > 'z') {
             throw new IllegalArgumentException("Batas huruf harus berada di antara a sampai z.");
         }
-
         if (batasBawah >= batasAtas) {
             throw new IllegalArgumentException("Batas bawah harus lebih kecil dari batas atas.");
         }
     }
 
-    private static char bacaHuruf(Scanner in) {
-        while (true) {
-            String inUser = in.next();
-
-            if (!inUser.isEmpty()) {
-                char huruf = Character.toLowerCase(inUser.charAt(0));
-
-                if (huruf >= 'a' && huruf <= 'z') {
-                    return huruf;
-                }
-            }
-
-            System.out.println("input harus berupa huruf a sampai z. Coba lagi.");
-            System.out.print("Masukkan lagi: ");
-        }
+    private void generateAbjadRahasia() {
+        Random rand = new Random();
+        int min = (int) batasBawah;
+        int max = (int) batasAtas;
+        this.abjadRahasia = (char) (rand.nextInt((max - min) + 1) + min);
     }
 
     public String tebakAbjad(char tebakan) {
-        if (isGameSelesai()) {
-            return "Permainan sudah selesai.";
-        }
-
-        if (!validasiTebakan(tebakan)) {
-            return "Tebakan harus berupa huruf.";
-        }
-
-        tambahPercobaan();
         tebakan = Character.toLowerCase(tebakan);
 
-        if (tebakan == abjadRahasia) {
-            tandaiMenang();
-            return "Selamat! Tebakan Anda benar.";
-        } 
-        else if (getJumlahPercobaan() >= getBatasPercobaan()) {
-            return "Maaf, Anda telah kehabisan percobaan. Abjad rahasia adalah: " + abjadRahasia;
-        } 
-        else if (tebakan > abjadRahasia){
-            return "Tebakan Anda Terlalu Tinggi.";
+        if (tebakan < batasBawah || tebakan > batasAtas) {
+            return "Tebakan di luar rentang (" + (char) batasBawah + " - " + (char) batasAtas + ")";
         }
-        else {
+
+        jumlahPercobaan++;
+
+        if (tebakan == abjadRahasia) {
+            menang = true;
+            return "Selamat! Tebakan Anda benar.";
+        } else if (jumlahPercobaan >= batasPercobaan) {
+            return "Maaf, kesempatan Anda habis. Abjad rahasia adalah: " + abjadRahasia;
+        } else if (tebakan > abjadRahasia) {
+            return "Tebakan Anda Terlalu Tinggi.";
+        } else {
             return "Tebakan Anda Terlalu Rendah.";
         }
     }
 
-    public static void mulaiPermainan(Scanner in, leaderboard SKOR) {
-        System.out.println("\n=== GAME TEBAK ABJAD ===");
+    @Override
+    public int hitungSkor() {
+        if (!menang) return 0;
 
-        System.out.print("Masukkan batas bawah huruf: ");
-        char batasBawah = bacaHuruf(in);
+        final int maxSkor = 2500;
+        int deduct = switch (batasPercobaan) {
+            case 3 -> 100;
+            case 5 -> 200;
+            case 7 -> 300;
+            default -> 100;
+        };
 
-        System.out.print("Masukkan batas atas huruf: ");
-        char batasAtas = bacaHuruf(in);
+        return Math.max(0, maxSkor - (deduct * (jumlahPercobaan - 1)));
+    }
 
-        while (batasAtas <= batasBawah) {
-            System.out.println("Batas atas harus lebih besar dari batas bawah.");
-            System.out.print("Masukkan batas atas huruf lagi: ");
-            batasAtas = bacaHuruf(in);
-        }
+    public static void mulaiPermainan(Scanner in, leaderboard skor) {
+        System.out.println("\n=== PERMAINAN TEBAK ABJAD ===");
+        System.out.print("Masukkan Batas Bawah Huruf (a-z): ");
+        char bb = in.nextLine().trim().toLowerCase().charAt(0);
+        System.out.print("Masukkan Batas Atas Huruf (a-z): ");
+        char ba = in.nextLine().trim().toLowerCase().charAt(0);
+        System.out.print("Masukkan Batas Percobaan (3/5/7): ");
+        int bp = bacaInt(in);
 
-        System.out.println("Pilih banyak percobaan: 3x, 5x, atau 7x");
-        int batasPercobaan = pilihPercobaan(in);
-
-        TebakAbjad game = new TebakAbjad(batasBawah, batasAtas, batasPercobaan);
-
-        System.out.println("\nGame dimulai!");
-        System.out.println("Tebak huruf dari " + batasBawah + " sampai " + batasAtas + ".");
-        System.out.println("Anda punya " + game.getBatasPercobaan() + " kali percobaan.\n");
+        TebakAbjad game = new TebakAbjad(bb, ba, bp);
 
         while (!game.isGameSelesai()) {
-            System.out.print("Masukkan tebakan huruf Anda: ");
-            char tebakan = bacaHuruf(in);
-
-            /* 
-             * LABEL [MATERI 3 - DYNAMIC BINDING]: 
-             * Pemanggilan tebakAbjad() diselesaikan secara dinamis saat runtime oleh JVM.
-             */
+            System.out.print("Masukkan tebakan huruf (" + (char) game.batasBawah + " - " + (char) game.batasAtas + "): ");
+            String input = in.nextLine().trim();
+            if (input.isEmpty()) continue;
+            
+            char tebakan = input.charAt(0);
             String hasil = game.tebakAbjad(tebakan);
             System.out.println(hasil);
-
-            if (game.isGameSelesai()) {
-                System.out.println("\nPermainan selesai.\n");
-                game.simpanSkor(in, SKOR);
-                break;
-            }
         }
 
-        TebakAbjad.tampilkanLeaderboard(SKOR);
-        opsiKembaliKeMenuUtama(in);
-    }
+        /* 
+         * =========================================================
+         * MATERI 3 - UPCASTING EKSPLISIT (GAYA KELAS TERBUKA):
+         * Mengubah tipe referensi dari Subclass (TebakAbjad) ke Superclass (GameTebak).
+         * =========================================================
+         */
+        GameTebak gameUp = (GameTebak) game;
 
-    private void simpanSkor(Scanner in, leaderboard SKOR) {
-        String nama = inputNamaPemain(in, "Tebak Abjad");
-        // MATERI 3: Memanggil skor dari hasil Overriding kelas ini
-        int skor = hitungSkor();
-        SKOR.tambahSkorAbjad(nama, skor);
-        System.out.println("Skor Anda: " + skor);
-    }
+        System.out.println("\n========================================");
+        System.out.println("     RINGKASAN AKHIR (UPCASTING)");
+        System.out.println("========================================");
+        System.out.println("Status Selesai : " + (gameUp.isGameSelesai() ? "Selesai" : "Belum Selesai"));
+        System.out.println("Total Percobaan: " + gameUp.getJumlahPercobaan() + " kali");
+        System.out.println("Skor Akhir     : " + gameUp.hitungSkor());
+        System.out.println("========================================\n");
 
-    public static void tampilkanLeaderboard(leaderboard SKOR) {
-        System.out.println("=== Skor Tebak Abjad ===");
-
-        String[] namaPemainAbjad = SKOR.getNamaPemainAbjad();
-        int[] skorPemainAbjad = SKOR.getSkorPemainAbjad();
-
-        for (int i = 0; i < namaPemainAbjad.length; i++) {
-            System.out.printf("%d. %s - %d%n", i + 1, namaPemainAbjad[i], skorPemainAbjad[i]);
+        if (game.menang) {
+            simpanSkor(in, skor, game.hitungSkor());
         }
+    }
+
+    private static void simpanSkor(Scanner in, leaderboard skor, int skorAkhir) {
+        System.out.print("Masukkan Nama Anda untuk Leaderboard: ");
+        String nama = in.nextLine();
+        skor.tambahSkorAbjad(nama, skorAkhir);
+        System.out.println("Skor berhasil disimpan!");
+    }
+
+    public static void tampilkanLeaderboard(leaderboard skor) {
+        System.out.println("\n=== LEADERBOARD TEBAK ABJAD ===");
+        skor.tampilkanSkorAbjad();
     }
 }

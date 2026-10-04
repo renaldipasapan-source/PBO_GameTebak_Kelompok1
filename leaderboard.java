@@ -1,101 +1,48 @@
-/*
- * LABEL [MATERI 1 - DATA HIDING & ENKAPSULASI]:
- * Kelas leaderboard sekarang murni hanya bertugas menyimpan data skor (private arrays).
- */
+import java.util.ArrayList;
+
 public class leaderboard {
-    private String[] namaPemainAngka;
-    private int[] skorPemainAngka;
-    private String[] namaPemainAbjad;
-    private int[] skorPemainAbjad;
+    private static class SkorEntry {
+        String nama;
+        int skor;
 
-    public leaderboard() {
-        this.namaPemainAngka = new String[0];
-        this.skorPemainAngka = new int[0];
-        this.namaPemainAbjad = new String[0];
-        this.skorPemainAbjad = new int[0];
-    }
-
-    private static String[] tambahElementString(String[] array, String element) {
-        String[] tempArray = new String[array.length + 1];
-        System.arraycopy(array, 0, tempArray, 0, array.length);
-        tempArray[array.length] = element;
-        return tempArray;
-    }
-
-    private static int[] tambahElementInt(int[] array, int element) {
-        int[] tempArray = new int[array.length + 1];
-        System.arraycopy(array, 0, tempArray, 0, array.length);
-        tempArray[array.length] = element;
-        return tempArray;
-    }
-
-    /* 
-     * LABEL [MATERI 1 - SETTER METHOD]: 
-     * Menerima nilai skor yang sudah dihitung oleh masing-masing kelas game.
-     */
-    public void tambahSkorAngka(String namaPemain, int skor) {
-        namaPemainAngka = tambahElementString(namaPemainAngka, namaPemain);
-        skorPemainAngka = tambahElementInt(skorPemainAngka, skor);
-        urutkanSkorAngka(false);
-    }
-
-    public void tambahSkorAbjad(String namaPemain, int skor) {
-        namaPemainAbjad = tambahElementString(namaPemainAbjad, namaPemain);
-        skorPemainAbjad = tambahElementInt(skorPemainAbjad, skor);
-        urutkanSkorAbjad(false);
-    }
-
-    private static void urutkanSkor(String[] namaPemain, int[] skorPemain, boolean ascending) {
-        for (int i = 0; i < skorPemain.length - 1; i++) {
-            for (int j = 0; j < skorPemain.length - 1 - i; j++) {
-                boolean shouldSwap = ascending ? (skorPemain[j] > skorPemain[j + 1]) : (skorPemain[j] < skorPemain[j + 1]);
-
-                if (shouldSwap) {
-                    int tempSkor = skorPemain[j];
-                    skorPemain[j] = skorPemain[j + 1];
-                    skorPemain[j + 1] = tempSkor;
-                    
-                    String tempNama = namaPemain[j];
-                    namaPemain[j] = namaPemain[j + 1];
-                    namaPemain[j + 1] = tempNama;
-                }
-            }
+        SkorEntry(String nama, int skor) {
+            this.nama = nama;
+            this.skor = skor;
         }
     }
 
-    public void urutkanSkorAngka() { 
-        urutkanSkor(namaPemainAngka, skorPemainAngka, false); 
+    private final ArrayList<SkorEntry> listSkorAngka = new ArrayList<>();
+    private final ArrayList<SkorEntry> listSkorAbjad = new ArrayList<>();
+
+    public void tambahSkorAngka(String nama, int skor) {
+        listSkorAngka.add(new SkorEntry(nama, skor));
+        listSkorAngka.sort((a, b) -> Integer.compare(b.skor, a.skor));
     }
 
-    public void urutkanSkorAngka(boolean ascending) { 
-        urutkanSkor(namaPemainAngka, skorPemainAngka, ascending); 
+    public void tambahSkorAbjad(String nama, int skor) {
+        listSkorAbjad.add(new SkorEntry(nama, skor));
+        listSkorAbjad.sort((a, b) -> Integer.compare(b.skor, a.skor));
     }
 
-    public void urutkanSkorAbjad() { 
-        urutkanSkor(namaPemainAbjad, skorPemainAbjad, false); 
+    public void tampilkanSkorAngka() {
+        if (listSkorAngka.isEmpty()) {
+            System.out.println("Belum ada skor Tebak Angka tercatat.");
+            return;
+        }
+        for (int i = 0; i < listSkorAngka.size(); i++) {
+            SkorEntry e = listSkorAngka.get(i);
+            System.out.println((i + 1) + ". " + e.nama + " - " + e.skor + " Poin");
+        }
     }
 
-    public void urutkanSkorAbjad(boolean ascending) { 
-        urutkanSkor(namaPemainAbjad, skorPemainAbjad, ascending); 
-    }
-
-    /* 
-     * LABEL [MATERI 1 - GETTER METHOD & DATA HIDING]: 
-     * Mengembalikan copy (.clone()) agar array privat tidak bisa dimanipulasi dari luar.
-     */
-    public String[] getNamaPemainAngka() { 
-        return namaPemainAngka.clone(); 
-    }
-
-    public int[] getSkorPemainAngka() { 
-        return skorPemainAngka.clone(); 
-    }
-
-    public String[] getNamaPemainAbjad() { 
-        return namaPemainAbjad.clone(); 
-    }
-
-    public int[] getSkorPemainAbjad() { 
-        return skorPemainAbjad.clone(); 
+    public void tampilkanSkorAbjad() {
+        if (listSkorAbjad.isEmpty()) {
+            System.out.println("Belum ada skor Tebak Abjad tercatat.");
+            return;
+        }
+        for (int i = 0; i < listSkorAbjad.size(); i++) {
+            SkorEntry e = listSkorAbjad.get(i);
+            System.out.println((i + 1) + ". " + e.nama + " - " + e.skor + " Poin");
+        }
     }
 }

@@ -2,7 +2,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class mainmenu {
-    /* LABEL [MATERI 1 - DATA HIDING]: Atribut privat penampung instance leaderboard */
     private static final leaderboard SKOR = new leaderboard();
 
     public static void main(String[] args) {
@@ -14,10 +13,6 @@ public class mainmenu {
                 pilihan = pilihMenu(in, 1, 4);
                 
                 switch (pilihan) {
-                    /* 
-                     * LABEL [MATERI 3 - POLYMORPHISM & DYNAMIC BINDING]:
-                     * Menu utama memanggil permainannya masing-masing.
-                     */
                     case 1 -> TebakAngka.mulaiPermainan(in, SKOR);
                     case 2 -> TebakAbjad.mulaiPermainan(in, SKOR);
                     case 3 -> menuSkor(in);
@@ -28,7 +23,6 @@ public class mainmenu {
         }
     }
 
-    /* LABEL [MATERI 1 - VALIDASI SCANNER]: Memastikan pilihan menu berupa angka yang sesuai batas */
     private static int pilihMenu(Scanner in, int batasBawah, int batasAtas) {
         while (true) {
             try {
@@ -43,7 +37,7 @@ public class mainmenu {
                 System.out.print("Masukkan lagi: ");
             } 
             catch (InputMismatchException e) {
-                System.out.println("in harus angka. Silakan coba lagi.");
+                System.out.println("Input harus berupa angka. Silakan coba lagi.");
                 in.nextLine();
                 System.out.print("Masukkan lagi: ");
             }
