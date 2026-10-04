@@ -18,7 +18,7 @@ Proyek ini dirancang secara khusus untuk mendemonstrasikan penerapan **4 Pilar U
 
 | Kontributor | Sub-Materi 3 | Peran Modul & Kodingan | Branch Feature |
 |---|---|---|---|
-| **Renaldi Pasapan** *(Ketua)* | ⬆️ **Upcasting** | Mengatur variabel referensi `GameTebak` penampung objek subclass | `feature/upcasting` |
+| **Renaldi Pasapan** | ⬆️ **Upcasting** | Mengatur variabel referensi `GameTebak` penampung objek subclass | `feature/upcasting` |
 | **Jonathan Immanuel I.** | 🔄 **Overriding** | Overriding method `hitungSkor()` & `validasiTebakan()` di `TebakAngka.java` | `feature/overriding-angka` |
 | **Rafli Gio Manulang** | 🔄 **Overriding** | Overriding method `hitungSkor()` & `validasiTebakan()` di `TebakAbjad.java` | `feature/overriding-abjad` |
 | **Markwell Gilang A.** | 🎭 **Polymorphism** | Menerapkan fleksibilitas panggilan method polimorfik | `feature/polymorphism` |
@@ -245,6 +245,6 @@ PBO_GameTebak_Kelompok1/
 ├── mainmenu.java
 │
 ├── README.md                            <-- (Dokumentasi Utama Project)
-├── Struktur_Materi.md                  <-- (Baru: Peta Arsitektur & Tugas Anggota)
+├── Struktur_Materi.md                   <-- (Baru: Peta Arsitektur & Tugas Anggota)
 ├── Struktur_Overriding_Polymorphism.md  <-- (Baru: Bedah Overriding & Polymorphism)
 └── Struktur_Upcasting_DynamicBinding.md <-- (Baru: Bedah Upcasting & Dynamic Binding)
