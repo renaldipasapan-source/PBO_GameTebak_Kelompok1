@@ -2,6 +2,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class mainmenu {
+
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & DATA HIDING]
+     * Objek 'SKOR' diset 'private static final' agar instance 
+     * leaderboard terproteksi dan bertahan selama aplikasi berjalan.
+     * =========================================================
+     */
     private static final leaderboard SKOR = new leaderboard();
 
     public static void main(String[] args) {
@@ -23,6 +31,13 @@ public class mainmenu {
         }
     }
 
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & MODULARITAS]
+     * Helper method diset 'private' agar hanya bisa digunakan 
+     * secara internal di dalam kelas mainmenu saja.
+     * =========================================================
+     */
     private static int pilihMenu(Scanner in, int batasBawah, int batasAtas) {
         while (true) {
             try {

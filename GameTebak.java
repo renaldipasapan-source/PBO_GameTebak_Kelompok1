@@ -1,6 +1,14 @@
 import java.util.Scanner;
 
 public class GameTebak {
+
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & DATA HIDING]
+     * Variabel diset 'protected' agar disembunyikan dari luar, 
+     * tetapi tetap dapat diakses langsung oleh kelas anak (subclass).
+     * =========================================================
+     */
     protected int batasBawah;
     protected int batasAtas;
     protected int batasPercobaan;
@@ -18,6 +26,9 @@ public class GameTebak {
         this.batasAtas = batasAtas;
     }
 
+    /* 
+     * Implementasi default method hitungSkor() pada kelas induk.
+     */
     public int hitungSkor() {
         return 0;
     }

@@ -1,7 +1,22 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/* 
+ * =========================================================
+ * [MATERI 2 - INHERITANCE / PEWARISAN]
+ * Kata kunci 'extends GameTebak' menandakan bahwa TebakAngka 
+ * adalah subclass yang mewarisi atribut/method dari superclass GameTebak.
+ * =========================================================
+ */
 public class TebakAngka extends GameTebak {
+
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & DATA HIDING]
+     * Variabel 'angkaRahasia' diset 'private' agar tidak bisa diakses 
+     * atau diubah secara langsung dari luar kelas ini.
+     * =========================================================
+     */
     private int angkaRahasia;
 
     public TebakAngka(int batasBawah, int batasAtas, int batasPercobaan) {
@@ -10,6 +25,12 @@ public class TebakAngka extends GameTebak {
         generateAngkaRahasia();
     }
 
+    /* 
+     * =========================================================
+     * [MATERI 3 - POLYMORPHISM: METHOD OVERRIDING]
+     * Menulis ulang method setBatasTebakan milik kelas induk dengan validasi khusus.
+     * =========================================================
+     */
     @Override
     protected final void setBatasTebakan(int batasBawah, int batasAtas) {
         if (batasBawah >= batasAtas) {
@@ -47,6 +68,13 @@ public class TebakAngka extends GameTebak {
         }
     }
 
+    /* 
+     * =========================================================
+     * [MATERI 3 - POLYMORPHISM: METHOD OVERRIDING]
+     * Menulis ulang method hitungSkor() milik GameTebak untuk kalkulasi 
+     * skor spesifik permainan Tebak Angka.
+     * =========================================================
+     */
     @Override
     public int hitungSkor() {
         if (!menang) return 0;
@@ -82,8 +110,11 @@ public class TebakAngka extends GameTebak {
 
         /* 
          * =========================================================
-         * MATERI 3 - UPCASTING EKSPLISIT (GAYA KELAS TERBUKA):
-         * Mengubah tipe referensi dari Subclass (TebakAngka) ke Superclass (GameTebak).
+         * [MATERI 3 - POLYMORPHISM: EXPLICIT UPCASTING & DYNAMIC BINDING]
+         * 1. Explicit Upcasting: Mengubah tipe referensi dari Subclass (TebakAngka) 
+         *    menjadi Superclass (GameTebak).
+         * 2. Dynamic Binding: Pemanggilan gameUp.hitungSkor() secara otomatis 
+         *    menjalankan fungsi hitungSkor() milik TebakAngka saat runtime.
          * =========================================================
          */
         GameTebak gameUp = (GameTebak) game;

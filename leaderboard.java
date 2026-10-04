@@ -1,6 +1,14 @@
 import java.util.ArrayList;
 
 public class leaderboard {
+
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & DATA HIDING]
+     * Inner class 'SkorEntry' diset 'private' agar struktur data 
+     * penyimpanan nama dan skor tidak dapat diakses secara langsung dari luar.
+     * =========================================================
+     */
     private static class SkorEntry {
         String nama;
         int skor;
@@ -11,6 +19,13 @@ public class leaderboard {
         }
     }
 
+    /* 
+     * =========================================================
+     * [MATERI 1 - ENCAPSULATION & DATA HIDING]
+     * List penampung skor diset 'private final' untuk mencegah 
+     * manipulasi data leaderboard secara bebas tanpa melalui method resmi.
+     * =========================================================
+     */
     private final ArrayList<SkorEntry> listSkorAngka = new ArrayList<>();
     private final ArrayList<SkorEntry> listSkorAbjad = new ArrayList<>();
 
